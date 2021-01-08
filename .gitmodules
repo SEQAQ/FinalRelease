@@ -1,0 +1,6 @@
+[submodule "backend"]
+	path = backend
+	url = https://github.com/SEQAQ/backend.git
+[submodule "qaq-react"]
+	path = qaq-react
+	url = https://github.com/SEQAQ/qaq-react.git
