@@ -1,0 +1,70 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: RepliesService</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.backend.seqaq.service</a> ]
+</div>
+
+<h1>Coverage Summary for Class: RepliesService (com.backend.seqaq.service)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">RepliesService</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.backend.seqaq.service;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import com.backend.seqaq.entity.Replies;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import java.util.List;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;public interface RepliesService {
+<i>8</i>&nbsp;  String replyAnswers(Long uid, Long did, String text);
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;  String replyReplies(Long uid, Long did, String text);
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;  Replies findReply(Long rid); // find a reply
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;  List&lt;Replies&gt; findByUid(Long uid);
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;  List&lt;Replies&gt; findByAid(Long aid);
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;  List&lt;Replies&gt; findByRid(Long rid); // find the replies for the &#39;rid&#39; reply
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;  String likeReplies(Long rid);
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;  String dislikeReplies(Long rid);
+<i>23</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-01-08 21:31</div>
+</div>
+</body>
+</html>

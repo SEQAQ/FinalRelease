@@ -1,0 +1,82 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: UsersService</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.backend.seqaq.service</a> ]
+</div>
+
+<h1>Coverage Summary for Class: UsersService (com.backend.seqaq.service)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">UsersService</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.backend.seqaq.service;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import com.backend.seqaq.entity.UserBean;
+<i>4</i>&nbsp;import com.backend.seqaq.entity.Users;
+<i>5</i>&nbsp;import com.backend.seqaq.util.exception.RegistrationException;
+<i>6</i>&nbsp;import org.springframework.data.domain.Page;
+<i>7</i>&nbsp;import org.springframework.data.domain.Pageable;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;import java.util.List;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;public interface UsersService {
+<i>12</i>&nbsp;  Users findById(Long id);
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;  Users findByAccount(String account);
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;  Users register(Users u) throws RegistrationException;
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;  String banUser(Long uid);
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;  String unbanUser(Long uid);
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;  String login(String account, String password);
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;  String checkStatus(String account);
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;  void activate(Users user);
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;  UserBean getUser(String username);
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;  Page&lt;Users&gt; findAll(Pageable pageable);
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;  List&lt;Users&gt; findAll();
+<i>33</i>&nbsp;
+<i>34</i>&nbsp;  Long editUser(Users users, int isChanged);
+<i>35</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-01-08 21:31</div>
+</div>
+</body>
+</html>

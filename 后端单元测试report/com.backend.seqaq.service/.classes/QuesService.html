@@ -1,0 +1,81 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: QuesService</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.backend.seqaq.service</a> ]
+</div>
+
+<h1>Coverage Summary for Class: QuesService (com.backend.seqaq.service)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">QuesService</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.backend.seqaq.service;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import com.alibaba.fastjson.JSONObject;
+<i>4</i>&nbsp;import com.backend.seqaq.entity.Questions;
+<i>5</i>&nbsp;import org.springframework.data.domain.Page;
+<i>6</i>&nbsp;import org.springframework.data.domain.Pageable;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;import java.util.List;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;public interface QuesService {
+<i>11</i>&nbsp;  List&lt;Questions&gt; findByUid(Long uid);
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;  String createQuestion(JSONObject json);
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;  Questions findById(Long qid);
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;  String editQues(Long qid, String title, String detail);
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;  String editQues(Long qid, String title);
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;  String banQues(Long qid);
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;  String unbanQues(Long qid);
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;  String delQues(Long qid);
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;  String close(Long qid);
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;  Page&lt;Questions&gt; findAll(Pageable pageable);
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;  List&lt;Questions&gt; findAll();
+<i>32</i>&nbsp;
+<i>33</i>&nbsp;  int checklevel(int exp);
+<i>34</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-01-08 21:31</div>
+</div>
+</body>
+</html>

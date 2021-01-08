@@ -1,0 +1,227 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: RepliesServiceImpl</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.backend.seqaq.service.impl</a> ]
+</div>
+
+<h1>Coverage Summary for Class: RepliesServiceImpl (com.backend.seqaq.service.impl)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">RepliesServiceImpl</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (9/ 9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (62/ 62)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.backend.seqaq.service.impl;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import com.backend.seqaq.dao.AnswersDao;
+<i>4</i>&nbsp;import com.backend.seqaq.dao.RepliesDao;
+<i>5</i>&nbsp;import com.backend.seqaq.dao.UsersDao;
+<i>6</i>&nbsp;import com.backend.seqaq.entity.Answers;
+<i>7</i>&nbsp;import com.backend.seqaq.entity.Replies;
+<i>8</i>&nbsp;import com.backend.seqaq.entity.ReplyContent;
+<i>9</i>&nbsp;import com.backend.seqaq.entity.Users;
+<i>10</i>&nbsp;import com.backend.seqaq.event.OnNewReplyEvent;
+<i>11</i>&nbsp;import com.backend.seqaq.service.RepliesService;
+<i>12</i>&nbsp;import com.backend.seqaq.tools.examine.Examine;
+<i>13</i>&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+<i>14</i>&nbsp;import org.springframework.context.ApplicationEventPublisher;
+<i>15</i>&nbsp;import org.springframework.stereotype.Service;
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;import java.sql.Timestamp;
+<i>18</i>&nbsp;import java.util.List;
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;@Service
+<b class="fc"><i>21</i>&nbsp;public class RepliesServiceImpl implements RepliesService {</b>
+<i>22</i>&nbsp;  @Autowired private RepliesDao repliesDao;
+<i>23</i>&nbsp;  @Autowired private UsersDao usersDao;
+<i>24</i>&nbsp;  @Autowired private AnswersDao answersDao;
+<i>25</i>&nbsp;  @Autowired private ApplicationEventPublisher eventPublisher;
+<i>26</i>&nbsp;
+<b class="fc"><i>27</i>&nbsp;  private Examine examine = new Examine();</b>
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;  public String replyAnswers(Long uid, Long did, String text) {
+<b class="fc"><i>30</i>&nbsp;    Users users = usersDao.findById(uid);</b>
+<b class="fc"><i>31</i>&nbsp;    Answers answers = answersDao.findById(did);</b>
+<b class="fc"><i>32</i>&nbsp;    if (users == null || answers == null) return &quot;Error&quot;;</b>
+<i>33</i>&nbsp;    else {
+<b class="fc"><i>34</i>&nbsp;      Replies replies = new Replies();</b>
+<b class="fc"><i>35</i>&nbsp;      replies.setDislike(0L);</b>
+<b class="fc"><i>36</i>&nbsp;      replies.setLike(0L);</b>
+<b class="fc"><i>37</i>&nbsp;      replies.setStatus(1);</b>
+<b class="fc"><i>38</i>&nbsp;      replies.setDid(did);</b>
+<b class="fc"><i>39</i>&nbsp;      replies.setDtype(0);</b>
+<b class="fc"><i>40</i>&nbsp;      replies.setUid(uid);</b>
+<b class="fc"><i>41</i>&nbsp;      replies.setAnswers(answers);</b>
+<b class="fc"><i>42</i>&nbsp;      replies.setUsers(users);</b>
+<b class="fc"><i>43</i>&nbsp;      replies.setReplies(null);</b>
+<b class="fc"><i>44</i>&nbsp;      Timestamp d = new Timestamp(System.currentTimeMillis());</b>
+<b class="fc"><i>45</i>&nbsp;      replies.setCtime(d);</b>
+<i>46</i>&nbsp;      //      org.json.JSONObject object = examine.forText(text);
+<i>47</i>&nbsp;      //      if (object.getInt(&quot;conclusionType&quot;) != 1) {
+<i>48</i>&nbsp;      //        String words =
+<i>49</i>&nbsp;      //            object
+<i>50</i>&nbsp;      //                .getJSONArray(&quot;data&quot;)
+<i>51</i>&nbsp;      //                .getJSONObject(0)
+<i>52</i>&nbsp;      //                .getJSONArray(&quot;hits&quot;)
+<i>53</i>&nbsp;      //                .getJSONObject(0)
+<i>54</i>&nbsp;      //                .getJSONArray(&quot;words&quot;)
+<i>55</i>&nbsp;      //                .toString();
+<i>56</i>&nbsp;      //        return &quot;问题内容存在敏感词汇: &quot; + words + &quot; 等&quot;;
+<i>57</i>&nbsp;      //      }
+<b class="fc"><i>58</i>&nbsp;      ReplyContent content = new ReplyContent();</b>
+<b class="fc"><i>59</i>&nbsp;      content.setContent(text);</b>
+<b class="fc"><i>60</i>&nbsp;      replies.setContent(content);</b>
+<b class="fc"><i>61</i>&nbsp;      System.out.println(replies);</b>
+<b class="fc"><i>62</i>&nbsp;      String result = repliesDao.reply(replies).toString();</b>
+<b class="fc"><i>63</i>&nbsp;      if (result.equals(&quot;OK&quot;)) eventPublisher.publishEvent(new OnNewReplyEvent(replies));</b>
+<b class="fc"><i>64</i>&nbsp;      return result;</b>
+<i>65</i>&nbsp;    }
+<i>66</i>&nbsp;  }
+<i>67</i>&nbsp;
+<i>68</i>&nbsp;  public String replyReplies(Long uid, Long did, String text) {
+<b class="fc"><i>69</i>&nbsp;    Users users = usersDao.findById(uid);</b>
+<b class="fc"><i>70</i>&nbsp;    Replies repliestmp = repliesDao.findReply(did);</b>
+<b class="fc"><i>71</i>&nbsp;    if (users == null || repliestmp == null) return &quot;Error&quot;;</b>
+<i>72</i>&nbsp;    else {
+<b class="fc"><i>73</i>&nbsp;      Replies replies = new Replies();</b>
+<b class="fc"><i>74</i>&nbsp;      replies.setDislike(0L);</b>
+<b class="fc"><i>75</i>&nbsp;      replies.setLike(0L);</b>
+<b class="fc"><i>76</i>&nbsp;      replies.setStatus(1);</b>
+<b class="fc"><i>77</i>&nbsp;      replies.setDid(did);</b>
+<b class="fc"><i>78</i>&nbsp;      replies.setDtype(1);</b>
+<b class="fc"><i>79</i>&nbsp;      replies.setUid(uid);</b>
+<b class="fc"><i>80</i>&nbsp;      replies.setAnswers(null);</b>
+<b class="fc"><i>81</i>&nbsp;      replies.setUsers(users);</b>
+<b class="fc"><i>82</i>&nbsp;      replies.setReplies(repliestmp);</b>
+<b class="fc"><i>83</i>&nbsp;      Timestamp d = new Timestamp(System.currentTimeMillis());</b>
+<b class="fc"><i>84</i>&nbsp;      replies.setCtime(d);</b>
+<i>85</i>&nbsp;      //      org.json.JSONObject object = examine.forText(text);
+<i>86</i>&nbsp;      //      if (object.getInt(&quot;conclusionType&quot;) != 1) {
+<i>87</i>&nbsp;      //        String words =
+<i>88</i>&nbsp;      //            object
+<i>89</i>&nbsp;      //                .getJSONArray(&quot;data&quot;)
+<i>90</i>&nbsp;      //                .getJSONObject(0)
+<i>91</i>&nbsp;      //                .getJSONArray(&quot;hits&quot;)
+<i>92</i>&nbsp;      //                .getJSONObject(0)
+<i>93</i>&nbsp;      //                .getJSONArray(&quot;words&quot;)
+<i>94</i>&nbsp;      //                .toString();
+<i>95</i>&nbsp;      //        return &quot;问题内容存在敏感词汇: &quot; + words + &quot; 等&quot;;
+<i>96</i>&nbsp;      //      }
+<b class="fc"><i>97</i>&nbsp;      ReplyContent content = new ReplyContent();</b>
+<b class="fc"><i>98</i>&nbsp;      content.setContent(text);</b>
+<b class="fc"><i>99</i>&nbsp;      replies.setContent(content);</b>
+<b class="fc"><i>100</i>&nbsp;      System.out.println(replies);</b>
+<b class="fc"><i>101</i>&nbsp;      String result = repliesDao.reply(replies).toString();</b>
+<b class="fc"><i>102</i>&nbsp;      if (result.equals(&quot;OK&quot;)) eventPublisher.publishEvent(new OnNewReplyEvent(replies));</b>
+<b class="fc"><i>103</i>&nbsp;      return result;</b>
+<i>104</i>&nbsp;    }
+<i>105</i>&nbsp;  }
+<i>106</i>&nbsp;
+<i>107</i>&nbsp;  public Replies findReply(Long rid) {
+<b class="fc"><i>108</i>&nbsp;    return repliesDao.findReply(rid);</b>
+<i>109</i>&nbsp;  }
+<i>110</i>&nbsp;
+<i>111</i>&nbsp;  public List&lt;Replies&gt; findByUid(Long uid) {
+<b class="fc"><i>112</i>&nbsp;    return repliesDao.findByUid(uid);</b>
+<i>113</i>&nbsp;  }
+<i>114</i>&nbsp;
+<i>115</i>&nbsp;  public List&lt;Replies&gt; findByAid(Long aid) {
+<b class="fc"><i>116</i>&nbsp;    return repliesDao.findByAid(aid);</b>
+<i>117</i>&nbsp;  }
+<i>118</i>&nbsp;
+<i>119</i>&nbsp;  public List&lt;Replies&gt; findByRid(Long rid) {
+<b class="fc"><i>120</i>&nbsp;    return repliesDao.findByRid(rid);</b>
+<i>121</i>&nbsp;  }
+<i>122</i>&nbsp;
+<i>123</i>&nbsp;  public String likeReplies(Long rid) {
+<b class="fc"><i>124</i>&nbsp;    Replies replies = repliesDao.findReply(rid);</b>
+<b class="fc"><i>125</i>&nbsp;    if (replies == null) return &quot;Error&quot;;</b>
+<i>126</i>&nbsp;    else {
+<b class="fc"><i>127</i>&nbsp;      Long like = replies.getLike();</b>
+<b class="fc"><i>128</i>&nbsp;      replies.setLike(like + 1);</b>
+<b class="fc"><i>129</i>&nbsp;      repliesDao.reply(replies);</b>
+<b class="fc"><i>130</i>&nbsp;      return &quot;OK&quot;;</b>
+<i>131</i>&nbsp;    }
+<i>132</i>&nbsp;  }
+<i>133</i>&nbsp;
+<i>134</i>&nbsp;  public String dislikeReplies(Long rid) {
+<b class="fc"><i>135</i>&nbsp;    Replies replies = repliesDao.findReply(rid);</b>
+<b class="fc"><i>136</i>&nbsp;    if (replies == null) return &quot;Error&quot;;</b>
+<i>137</i>&nbsp;    else {
+<b class="fc"><i>138</i>&nbsp;      Long dislike = replies.getDislike();</b>
+<b class="fc"><i>139</i>&nbsp;      replies.setDislike(dislike + 1);</b>
+<b class="fc"><i>140</i>&nbsp;      repliesDao.reply(replies);</b>
+<b class="fc"><i>141</i>&nbsp;      return &quot;OK&quot;;</b>
+<i>142</i>&nbsp;    }
+<i>143</i>&nbsp;  }
+<i>144</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-01-08 21:31</div>
+</div>
+</body>
+</html>
